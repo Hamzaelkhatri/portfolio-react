@@ -101,12 +101,12 @@ class Game {
     ControleGame() {
         // console.log(window.sessionStorage.getItem("email"));
         // alert(this.P1 +" "+ this.P2);
-        // if (this.Left_DownPressed && this.P1 === window.sessionStorage.getItem("email")) {
+        if (this.Left_DownPressed) {
         this.Player1.moveUp(4);
-        // }
-        // else if (this.Left_UpPressed && this.P1 === window.sessionStorage.getItem("email")) {
+        }
+        else if (this.Left_UpPressed) {
         this.Player1.moveDown(4);
-        // }
+        }
 
         // if (this.Right_DownPressed && this.P2 === window.sessionStorage.getItem("email")) {
         //     this.Player2.moveUp(4);
@@ -119,35 +119,28 @@ class Game {
     }
 
     start() {
-        // this.Psocket.on('connectClient', (data) =>
-        //  {
-        //     this.P1 = data.P1;
-        //     this.P2 = data.P2;
-        // });
-
         this.update();
 
     }
 
     random_bar() {
-        // this.ball.bot(this.Bar);
+        this.ball.bot(this.Player2);
     }
 
-
-
     update() {
+        this.canvas.width=window.innerWidth/2;
+        this.canvas.height=window.innerHeight/2;
         this.clear();
         this.show_score();  // show score
         this.draw();
-
-        if (!this.Pause) {
-            this.random_bar();
-            this.ControleGame();
-            this.ball.move();
-            this.ball.collision(this.Player1, this.Player2);
-        }
-        else
-            this.paused();
+        this.ControleGame();
+        this.random_bar();
+        this.ball.move();
+        this.ball.collision(this.Player1, this.Player2);
+        // if (!this.Pause) {
+        // }
+        // else
+            // this.paused();
         requestAnimationFrame(() => this.update());
 
     }
@@ -230,7 +223,7 @@ class Ball {
             this.y = this.canvas.height / 2;
             this.dx = -this.dx;
             this.Player2.score++;
-            this.goal_sound();
+            // this.goal_sound();
         }
         if (this.x + this.dx > this.canvas.width)// if ball hits the right
         {
@@ -399,8 +392,8 @@ const Canvas = (props: any) => {
     const canvasRef = useRef(null)
     useEffect(() => {
         var game = new Game(canvasRef.current as any);
-        game.start();
+        // game.start();
     }, []);
-    return <canvas ref={canvasRef}  {...props} width={800} height={400} />
+    return <canvas ref={canvasRef}  {...props} width={window.innerWidth/2} height={window.innerHeight/2} />
 }
 export default Canvas
