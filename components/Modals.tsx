@@ -15,13 +15,13 @@ export default function Modals() {
                 setIsModalVisible(true)
             }
             } style={{ background: '#1890ff', color: '#fff' }}>
-                Confirm
+                YES
             </Button>
             <Button size="small" onClick={() => {
                 notification.close(key)
                 setIsModalVisible(false)
             }} style={{ background: 'red', color: '#fff' }}>
-                Cancel
+                NOP
             </Button>
         </Space>
     );
@@ -31,20 +31,12 @@ export default function Modals() {
         notification.open({
             key,
             message: 'Welcome to My Portfolio',
-            description: 'Do you want to play a game?',
+            description: 'Do you want to play a game with My bot?',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
-        setTimeout(() => {
-            notification.open({
-                key,
-                message: 'Welcome to My Portfolio',
-                description: 'Im not jocking. ',
-                btn,
-                icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-                duration: 0,
+            duration: 0,
+            btn,
 
-            });
-        }, 2000);
+        });
     };
     useEffect(() => {
         openNotification();
@@ -52,7 +44,7 @@ export default function Modals() {
 
     return (
         <>
-            <Modal  visible={isModalVisible}
+            <Modal visible={isModalVisible}
                 onOk={() => {
                     setIsModalVisible(false)
                 }}
@@ -60,8 +52,11 @@ export default function Modals() {
                     setIsModalVisible(false)
                 }}
                 footer={null}
+                style={{
+                    color: '#0d117D0'
+                }}
                 width={'56%'}>
-                <div style={{ textAlign: 'center', width: '100%',height:'100%' }}>
+                <div style={{ textAlign: 'center', width: '100%', height: '100%' }}>
                     <Canvas />
                 </div>
             </Modal>
