@@ -392,7 +392,6 @@ const Canvas = (props: any) => {
     const canvasRef = useRef(null)
     useEffect(() => {
         var game = new Game(canvasRef.current as any);
-        // game.start();
     }, []);
     return <canvas ref={canvasRef}  {...props} width={window.innerWidth/2} height={window.innerHeight/2} />
 }

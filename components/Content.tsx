@@ -7,43 +7,8 @@ import Modals from "./Modals";
 
 
 
-const key = 'updatable';
 export default function Content({ children }: { children: React.ReactNode }) {
 
-    const btn = (
-        <Space>
-            <Button size="small" onClick={() => notification.close(key)} style={{ background: '#1890ff', color: '#fff' }}>
-                Confirm
-            </Button>
-            <Button size="small" onClick={() => notification.close(key)} style={{ background: 'red', color: '#fff' }}>
-                Cancel
-            </Button>
-        </Space>
-    );
-
-
-    const openNotification = () => {
-        notification.open({
-            key,
-            message: 'Welcome to My Portfolio',
-            description: 'Do you want to play a game?',
-            icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
-        setTimeout(() => {
-            notification.open({
-                key,
-                message: 'Welcome to My Portfolio',
-                description: 'Im not jocking. ',
-                btn,
-                icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-                duration: 0,
-
-            });
-        }, 2000);
-    };
-    useEffect(() => {
-        openNotification();
-    }, []);
     return (
         <div style={{ background: '#0d117D0', height: '100%', width: '100%', }}>
             <div className="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
