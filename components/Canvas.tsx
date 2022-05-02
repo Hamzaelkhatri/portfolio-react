@@ -182,7 +182,18 @@ class Game {
         this.ctx.fillText("PAUSE", this.canvas.width / 2 - 50, this.canvas.height / 2);
     }
 
+    cube()
+    {
+        // this.ctx.fillStyle = "white";
+        // this.ctx.fillRect(this.canvas.width / 2 - 50, this.canvas.height / 2-130, 100, 100);
+        let img = new Image();
+        img.src = "/Photo.jpeg";
+        this.ctx.drawImage(img, this.canvas.width / 2 - 50, this.canvas.height / 2-130, 100, 100);
+
+    }
+
     draw() {
+        this.cube();
         if (!this.Pause) {
             // this.center_line();
         }
