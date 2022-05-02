@@ -1,9 +1,15 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Cards from '../components/Card'
 import Content from '../components/Content'
 import NavBar from '../components/navbar'
-import styles from '../styles/Home.module.css'
+// import styles from '../styles/Home.module.css'
+import { Typography } from 'antd';
+import Modals from '../components/Modals'
+
+const { Title } = Typography;
+
 
 const Home: NextPage = () => {
   return (
@@ -14,26 +20,17 @@ const Home: NextPage = () => {
       </Head>
       <NavBar />
       <Content >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col space-y-4">
-            <div className="flex flex-col space-y-4">
-              <div className="flex flex-col space-y-4">
-                <div className="flex flex-col space-y-4">
-                  <div className="flex flex-col space-y-4">
-                    <div className="flex flex-col space-y-4">
-                      <div className="flex flex-col space-y-4">
-                        <span className="text-2xl font-bold">
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div style={{"display":"flex","flexDirection":"column","alignItems":"center","margin":"10px"}}>
+        <span className="title">
+          <Title level={1} style={{fontSize:"40px",color:"white"}}>
+                hello world
+          </Title>
+
+        </span>
+        <Cards />
         </div>
       </Content>
-
+        <Modals/>
     </div>
   )
 }
