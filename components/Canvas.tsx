@@ -1,3 +1,4 @@
+import { count } from 'console';
 import React, { useRef, useEffect } from 'react'
 
 
@@ -15,7 +16,8 @@ class Game {
     Left_UpPressed: boolean;
     Left_DownPressed: boolean;
     Pause: boolean;
-    Bar: Player;
+    // Bar: Player;
+    MySpeech : string;
     P1: string = "";
     P2: string = "";
 
@@ -28,6 +30,7 @@ class Game {
         //color: #0e101c;
         this.color = "#0e101c";
         this.Pause = false;
+        this.MySpeech = "";
 
         this.canvas.style.backgroundColor = this.color;
 
@@ -35,13 +38,39 @@ class Game {
         this.Right_DownPressed = false;
         this.Left_UpPressed = false;
         this.Left_DownPressed = false;
-        this.Bar = new Player(this.width / 2 - 5, this.height / 2 - 80, 10, 80, "white", this.ctx, this.canvas, 0, "paddle.png");
+        // this.Bar = new Player(this.width / 2 - 5, this.height / 2 - 80, 10, 80, "white", this.ctx, this.canvas, 0, "paddle.png");
         this.Player1 = new Player(10, (this.canvas.height - 80) / 2, 10, 80, "white", this.ctx, this.canvas, 0, "paddle.png");
         this.Player2 = new Player(this.canvas.width - 20, (this.canvas.height - 80) / 2, 10, 80, "white", this.ctx, this.canvas, 0, "paddle.png");
         this.ball = new Ball(this.canvas.width / 2, this.canvas.height / 2, 8, "red", this.ctx, this.canvas, this.Player1, this.Player2);
         document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
         document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
-        this.start();
+        this.write_text("Welcome To ping pong you will know me better in this game");
+        // this.write_text("nYou can play with [w] and [s]");
+         this.ctx.font = "20px Arial";
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText("You can play with [w] and [s]", this.width / 2 - this.ctx.measureText("You can play with [w] and [s]").width / 2, this.height / 2 + 40);
+        let counts = 0;
+        setInterval(() => {
+
+            if (counts === 5) {
+                this.MySpeech=("My Name is Hamza Elkhatri");
+            }
+            else if(counts === 10){
+                this.MySpeech=("I am a student of Computer Science");
+            }
+            else if(counts === 15){
+                this.MySpeech=("and I am a web && mobile developer");
+            }
+            else if(counts === 20)
+            {
+                this.MySpeech=("From Morocco, i love to develop web and mobile applications\n");
+            }
+            counts++;
+        }, 1000);
+
+        setTimeout(() => {
+            this.start();
+        }, 4000);
     }
 
     ToJson() {
@@ -49,9 +78,15 @@ class Game {
             "Player1": this.Player1.ToJson(),
             "Player2": this.Player2.ToJson(),
             "Ball": this.ball.ToJson(),
-            "Bar": this.Bar.ToJson(),
+            // "Bar": this.Bar.ToJson(),
             "Pause": this.Pause,
         }
+    }
+
+    write_text(text: string) {
+        this.ctx.font = "20px Arial";
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText(text, this.width / 2 - this.ctx.measureText(text).width / 2, this.height / 2);
     }
 
 
@@ -101,53 +136,37 @@ class Game {
     ControleGame() {
         // console.log(window.sessionStorage.getItem("email"));
         // alert(this.P1 +" "+ this.P2);
-        // if (this.Left_DownPressed && this.P1 === window.sessionStorage.getItem("email")) {
-        this.Player1.moveUp(4);
-        // }
-        // else if (this.Left_UpPressed && this.P1 === window.sessionStorage.getItem("email")) {
-        this.Player1.moveDown(4);
-        // }
-
-        // if (this.Right_DownPressed && this.P2 === window.sessionStorage.getItem("email")) {
-        //     this.Player2.moveUp(4);
-        //     this.socket.emit('DataToServer', this.ToJson());
-        // }
-        // else if (this.Right_UpPressed && this.P2 === window.sessionStorage.getItem("email")) {
-        //     this.Player2.moveDown(4);
-        //     this.socket.emit('DataToServer', this.ToJson());
-        // }
+        if (this.Left_DownPressed) {
+            this.Player1.moveUp(4);
+        }
+        else if (this.Left_UpPressed) {
+            this.Player1.moveDown(4);
+        }
     }
 
     start() {
-        // this.Psocket.on('connectClient', (data) =>
-        //  {
-        //     this.P1 = data.P1;
-        //     this.P2 = data.P2;
-        // });
-
         this.update();
 
     }
 
     random_bar() {
-        // this.ball.bot(this.Bar);
+        this.ball.bot(this.Player2);
     }
 
-
-
     update() {
-        this.clear();
-        this.show_score();  // show score
-        this.draw();
 
+        this.canvas.width = window.innerWidth / 2;
+        this.canvas.height = window.innerHeight / 2;
         if (!this.Pause) {
-            this.random_bar();
+            this.clear();
+            this.show_score();
+            this.write_text(this.MySpeech);
+            this.draw();
             this.ControleGame();
+            this.random_bar();
             this.ball.move();
             this.ball.collision(this.Player1, this.Player2);
         }
-        else
-            this.paused();
         requestAnimationFrame(() => this.update());
 
     }
@@ -167,9 +186,20 @@ class Game {
         this.ctx.fillText("PAUSE", this.canvas.width / 2 - 50, this.canvas.height / 2);
     }
 
+    cube()
+    {
+        // this.ctx.fillStyle = "white";
+        // this.ctx.fillRect(this.canvas.width / 2 - 50, this.canvas.height / 2-130, 100, 100);
+        let img = new Image();
+        img.src = "/Photo.jpeg";
+        this.ctx.drawImage(img, this.canvas.width / 2 - 50, this.canvas.height / 2-130, 100, 100);
+
+    }
+
     draw() {
+        this.cube();
         if (!this.Pause) {
-            this.center_line();
+            // this.center_line();
         }
         this.Player1.draw();
         this.Player2.draw();
@@ -212,6 +242,8 @@ class Ball {
     goal_sound() {
     }
 
+
+
     move() {
         this.x += this.dx;
         this.y += this.dy;
@@ -230,7 +262,7 @@ class Ball {
             this.y = this.canvas.height / 2;
             this.dx = -this.dx;
             this.Player2.score++;
-            this.goal_sound();
+            // this.goal_sound();
         }
         if (this.x + this.dx > this.canvas.width)// if ball hits the right
         {
@@ -272,10 +304,10 @@ class Ball {
     bot(p: Player) {
         var y_coordinate_of_ball_on_paddle = this.calculate_coordinates_of_ball_on_paddle(p);
         if (y_coordinate_of_ball_on_paddle < this.y + this.radius) {
-            p.moveUp(6);
+            p.moveUp(5);
         }
         else if (y_coordinate_of_ball_on_paddle > this.y + this.radius) {
-            p.moveDown(6);
+            p.moveDown(5);
         }
         this.bar_collision(p);
     }
@@ -399,8 +431,7 @@ const Canvas = (props: any) => {
     const canvasRef = useRef(null)
     useEffect(() => {
         var game = new Game(canvasRef.current as any);
-        game.start();
     }, []);
-    return <canvas ref={canvasRef}  {...props} width={800} height={400} />
+    return <canvas ref={canvasRef}  {...props} width={window.innerWidth / 2} height={window.innerHeight / 2} />
 }
 export default Canvas
