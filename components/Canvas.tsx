@@ -45,6 +45,10 @@ class Game {
         document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
         document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
         this.write_text("Welcome To ping pong you will know me better in this game");
+        // this.write_text("nYou can play with [w] and [s]");
+         this.ctx.font = "20px Arial";
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText("You can play with [w] and [s]", this.width / 2 - this.ctx.measureText("You can play with [w] and [s]").width / 2, this.height / 2 + 40);
         let counts = 0;
         setInterval(() => {
 
